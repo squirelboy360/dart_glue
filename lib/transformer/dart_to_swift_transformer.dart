@@ -12,8 +12,8 @@ class DartToSwiftTransformer {
     parser.parse(dartCode);
 
     // Logic to transform Dart Flutter-style widgets to Swift UI
-    // Example: Mapping Stateful and Stateless widgets to SwiftUI components
-    var transformedCode = ''; // Implement transformation logic here
+   
+    var transformedCode = ''; 
 
     return transformedCode;
   }
