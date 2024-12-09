@@ -59,8 +59,11 @@ import '../primitives/core/platform_view.dart';
 import '../primitives/core/platform_text.dart';
 import '../primitives/core/platform_button.dart';
 import '../primitives/core/platform_image.dart';
+import 'package:${projectName}/src/platform/platform_interface.dart';
 
-class IosPlatform implements PlatformImplementation {
+class IosPlatform implements PlatformImplementation {  // Change extends to implements
+  IosPlatform() : super();  // Add constructor
+  
   @override
   void createView(String viewId, Map<String, dynamic> props) {
     // iOS-specific view creation
@@ -89,8 +92,11 @@ import '../primitives/core/platform_view.dart';
 import '../primitives/core/platform_text.dart';
 import '../primitives/core/platform_button.dart';
 import '../primitives/core/platform_image.dart';
+import 'package:${projectName}/src/platform/platform_interface.dart';
 
-class AndroidPlatform implements PlatformImplementation {
+class AndroidPlatform implements PlatformImplementation {  // Change extends to implements
+  AndroidPlatform() : super();  // Add constructor
+  
   @override
   void createView(String viewId, Map<String, dynamic> props) {
     // Android-specific view creation
@@ -116,6 +122,8 @@ class AndroidPlatform implements PlatformImplementation {
     // Create platform interface
     await File('${platformDir.path}/platform_interface.dart').writeAsString('''
 abstract class PlatformImplementation {
+  PlatformImplementation(); // Remove const
+  
   void createView(String viewId, Map<String, dynamic> props);
   void createText(String viewId, Map<String, dynamic> props);
   void createButton(String viewId, Map<String, dynamic> props);
@@ -137,9 +145,9 @@ class PlatformBridge {
 
   PlatformBridge._() {
     if (Platform.isIOS) {
-      _platform = IosPlatform();
+      _platform = IosPlatform(); // Remove const
     } else if (Platform.isAndroid) {
-      _platform = AndroidPlatform();
+      _platform = AndroidPlatform(); // Remove const
     } else {
       throw UnsupportedError('Unsupported platform');
     }
@@ -176,22 +184,21 @@ import '../../bridge/platform_bridge.dart';
 
 abstract class Primitive {
   final String id;
-  final Map<String, dynamic> style;
+  final Map<String, dynamic>? style;
   final List<Primitive> children;
   
-  Primitive({
-    Map<String, dynamic>? style,
+  const Primitive({
+    required this.id,
+    this.style,
     this.children = const [],
-  }) : 
-    id = 'primitive_\${DateTime.now().microsecondsSinceEpoch}',
-    style = style ?? {};
+  });
     
   Map<String, dynamic> get props;
   
   void create() {
     final propsJson = {
       ...props,
-      'style': style,
+      if (style != null) 'style': style,
       'children': children.map((child) => child.props).toList(),
     };
     createNative(propsJson);
@@ -211,6 +218,11 @@ import 'primitive.dart';
 import '../../bridge/platform_bridge.dart';
 
 abstract class PlatformView extends Primitive {
+  const PlatformView({
+    super.style,
+    super.children,
+  });
+
   @override
   void createNative(Map<String, dynamic> props) {
     PlatformBridge.instance.createView(id, props);
@@ -256,13 +268,14 @@ abstract class PlatformImage extends Primitive {
 
     // Create concrete primitives
     await File('${primitivesDir.path}/view.dart').writeAsString('''
+import 'core/primitive.dart';
 import 'core/platform_view.dart';
 
 class View extends PlatformView {
   View({
-    Map<String, dynamic>? style,
-    List<Primitive> children = const [],
-  }) : super(style: style, children: children);
+    super.style,
+    super.children = const [],
+  });
 
   @override
   Map<String, dynamic> get props => {
@@ -272,6 +285,7 @@ class View extends PlatformView {
 ''');
 
     await File('${primitivesDir.path}/text.dart').writeAsString('''
+import 'core/primitive.dart';
 import 'core/platform_text.dart';
 
 class Text extends PlatformText {
@@ -279,8 +293,8 @@ class Text extends PlatformText {
   
   Text(
     this.text, {
-    Map<String, dynamic>? style,
-  }) : super(style: style);
+    super.style,
+  });
 
   @override
   Map<String, dynamic> get props => {
