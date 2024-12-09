@@ -1,11 +1,11 @@
-package com.my_app;
+package com.example_1;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import com.my_app.bridge.DNBridge;
+import com.example_1.bridge.DNBridge;
 
 public class MainActivity extends Activity {
     private FrameLayout rootContainer;

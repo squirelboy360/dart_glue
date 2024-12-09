@@ -1,6 +1,5 @@
 // File: packages/dart_glue_cli/lib/src/templates/project_template.dart
 import 'dart:io';
-import 'package:path/path.dart' as path;
 import 'ios_template.dart';
 import 'android_template.dart';
 
@@ -17,10 +16,10 @@ class ProjectCreator {
     await _createProjectStructure();
     await _createDartProject();
     await _createPubspec();
-    
+
     final iosTemplate = IosProjectTemplate();
     await iosTemplate.createXcodeProject(Directory('${projectDir.path}/ios'));
-    
+
     final androidTemplate = AndroidProjectTemplate();
     await androidTemplate.createAndroidProject(projectName, projectDir);
   }
@@ -32,17 +31,17 @@ class ProjectCreator {
   Future<void> _createDartProject() async {
     final libDir = Directory('${projectDir.path}/lib');
     await libDir.create();
-    
+
     // Create directory structure
     final srcDir = Directory('${libDir.path}/src');
     await srcDir.create();
-    
+
     final primitivesDir = Directory('${srcDir.path}/primitives');
     await primitivesDir.create();
-    
+
     final bridgeDir = Directory('${srcDir.path}/bridge');
     await bridgeDir.create();
-    
+
     final platformDir = Directory('${srcDir.path}/platform');
     await platformDir.create();
 
@@ -335,10 +334,10 @@ class Image extends PlatformImage {
 
   Future<void> _createMainFile(Directory libDir) async {
     await File('${libDir.path}/main.dart').writeAsString('''
-import 'package:dart_glue/primitives/view.dart';
-import 'package:dart_glue/primitives/text.dart';
-import 'package:dart_glue/primitives/button.dart';
-import 'package:dart_glue/primitives/image.dart';
+import 'package:dart_glue/src/primitives/view.dart';
+import 'package:dart_glue/src/primitives/text.dart';
+import 'package:dart_glue/src/primitives/button.dart';
+import 'package:dart_glue/src/primitives/image.dart';
 
 void main() {
   print('Dart Glue App Started');
@@ -395,7 +394,10 @@ environment:
   sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
-  dart_glue: ^1.0.0
+  dart_glue_cli:
+    git:
+      url: https://github.com/squirelboy360/dart_glue.git
+      path: framework/packages/dart_glue_cli
   ffi: ^2.0.1
 
 dev_dependencies:

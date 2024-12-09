@@ -3,7 +3,7 @@
 
 extern "C" {
     JNIEXPORT void JNICALL
-    Java_com_my_app_bridge_DNBridge_createView(
+    Java_com_example_1_bridge_DNBridge_createView(
         JNIEnv* env,
         jobject thiz,
         jstring viewId,

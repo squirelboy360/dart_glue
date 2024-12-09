@@ -1,4 +1,4 @@
-package com.my_app.bridge;
+package com.example_1.bridge;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -6,7 +6,7 @@ import android.widget.FrameLayout;
 import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
-import com.my_app.MainActivity;
+import com.example_1.MainActivity;
 
 public class DNBridge {
     private static DNBridge instance;
