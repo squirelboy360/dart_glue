@@ -1,16 +1,18 @@
 name: dart_glue_cli
-description: CLI tool for Dart Glue framework
+description: CLI tool for Dart Glue
 version: 1.0.0
+
 environment:
   sdk: ^3.5.0
 
-dependencies:
-  args: ^2.4.0
-  path: ^1.8.0
-  yaml: ^3.1.0
-  cli_util: ^0.4.2 
-
 executables:
-  dg: dart_glue
+  dart_glue: dart_glue
 
-  
+dependencies:
+  args: ^2.4.2
+  path: ^1.8.3
+
+dev_dependencies:
+  lints: ^2.1.0
+  test: ^1.24.0
+
