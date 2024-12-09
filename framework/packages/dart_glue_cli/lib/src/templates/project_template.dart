@@ -16,10 +16,10 @@ class ProjectCreator {
     await _createProjectStructure();
     await _createDartProject();
     await _createPubspec();
-    
+
     final iosTemplate = IosProjectTemplate();
     await iosTemplate.createXcodeProject(Directory('${projectDir.path}/ios'));
-    
+
     final androidTemplate = AndroidProjectTemplate();
     await androidTemplate.createAndroidProject(projectName, projectDir);
   }
@@ -31,25 +31,28 @@ class ProjectCreator {
   Future<void> _createDartProject() async {
     final libDir = Directory('${projectDir.path}/lib');
     await libDir.create();
-    
-    // Create directory structure
+
     final srcDir = Directory('${libDir.path}/src');
     await srcDir.create();
-    
+
+    // Create all necessary directories
     final primitivesDir = Directory('${srcDir.path}/primitives');
     await primitivesDir.create();
-    
+
     final bridgeDir = Directory('${srcDir.path}/bridge');
     await bridgeDir.create();
-    
+
     final platformDir = Directory('${srcDir.path}/platform');
     await platformDir.create();
 
-    // Create platform-specific implementations
+    // Generate all necessary files in the project directly
     await _createPlatformFiles(platformDir);
     await _createBridgeFiles(bridgeDir);
     await _createPrimitiveFiles(primitivesDir);
     await _createMainFile(libDir);
+
+    // Export primitives at the lib level
+    await _createExports(libDir);
   }
 
   Future<void> _createPlatformFiles(Directory platformDir) async {
@@ -394,12 +397,24 @@ environment:
   sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
-  dart_glue: ^1.0.0
+  dart_glue_cli:
+    git:
+      url: https://github.com/squirelboy360/dart_glue.git
+      path: framework/packages/dart_glue_cli
   ffi: ^2.0.1
 
 dev_dependencies:
   lints: ^2.0.0
   test: ^1.16.0
+''');
+  }
+
+  Future<void> _createExports(Directory libDir) async {
+    await File('${libDir.path}/primitives.dart').writeAsString('''
+export 'src/primitives/view.dart';
+export 'src/primitives/text.dart';
+export 'src/primitives/button.dart';
+export 'src/primitives/image.dart';
 ''');
   }
 }
