@@ -1,6 +1,5 @@
 // File: packages/dart_glue_cli/lib/src/templates/project_template.dart
 import 'dart:io';
-import 'package:path/path.dart' as path;
 import 'ios_template.dart';
 import 'android_template.dart';
 
