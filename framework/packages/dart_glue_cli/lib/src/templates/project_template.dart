@@ -334,10 +334,10 @@ class Image extends PlatformImage {
 
   Future<void> _createMainFile(Directory libDir) async {
     await File('${libDir.path}/main.dart').writeAsString('''
-import 'package:dart_glue/src/primitives/view.dart';
-import 'package:dart_glue/src/primitives/text.dart';
-import 'package:dart_glue/src/primitives/button.dart';
-import 'package:dart_glue/src/primitives/image.dart';
+import 'package:${projectName}/src/primitives/view.dart';
+import 'package:${projectName}/src/primitives/text.dart';
+import 'package:${projectName}/src/primitives/button.dart';
+import 'package:${projectName}/src/primitives/image.dart';
 
 void main() {
   print('Dart Glue App Started');
@@ -391,18 +391,18 @@ description: A new Dart Glue project
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: ^3.5.0
 
 dependencies:
   dart_glue_cli:
     git:
       url: https://github.com/squirelboy360/dart_glue.git
       path: framework/packages/dart_glue_cli
-  ffi: ^2.0.1
+  ffi: ^2.1.3 
 
 dev_dependencies:
-  lints: ^2.0.0
-  test: ^1.16.0
+  lints: ^5.0.0
+  test: ^1.25.12
 ''');
   }
 }

@@ -8,7 +8,9 @@ dependencies:
   args: ^2.4.0
   path: ^1.8.0
   yaml: ^3.1.0
-  cli_util: ^0.3.0
+  cli_util: ^0.4.2 
 
 executables:
   dg: dart_glue
+
+  
