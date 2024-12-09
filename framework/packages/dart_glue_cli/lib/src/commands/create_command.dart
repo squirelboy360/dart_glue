@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:args/command_runner.dart';
-import '../templates/project_template.dart';  // Update import path
+import 'package:dart_glue_cli/src/templates/project_template.dart';
+
 
 class CreateCommand extends Command {
   @override
