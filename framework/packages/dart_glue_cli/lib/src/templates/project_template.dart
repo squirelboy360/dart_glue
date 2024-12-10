@@ -217,7 +217,7 @@ abstract class Primitive {
 import 'primitive.dart';
 import '../../bridge/platform_bridge.dart';
 
-abstract class PlatformView extends Primitive {
+abstract class PlatformView implements Primitive {
   const PlatformView({
     super.style,
     super.children,
@@ -234,7 +234,7 @@ abstract class PlatformView extends Primitive {
 import 'primitive.dart';
 import '../../bridge/platform_bridge.dart';
 
-abstract class PlatformText extends Primitive {
+abstract class PlatformText implements Primitive {
   @override
   void createNative(Map<String, dynamic> props) {
     PlatformBridge.instance.createText(id, props);
@@ -246,7 +246,7 @@ abstract class PlatformText extends Primitive {
 import 'primitive.dart';
 import '../../bridge/platform_bridge.dart';
 
-abstract class PlatformButton extends Primitive {
+abstract class PlatformButton implements Primitive {
   @override
   void createNative(Map<String, dynamic> props) {
     PlatformBridge.instance.createButton(id, props);
@@ -258,7 +258,7 @@ abstract class PlatformButton extends Primitive {
 import 'primitive.dart';
 import '../../bridge/platform_bridge.dart';
 
-abstract class PlatformImage extends Primitive {
+abstract class PlatformImage implements Primitive {
   @override
   void createNative(Map<String, dynamic> props) {
     PlatformBridge.instance.createImage(id, props);
@@ -268,7 +268,7 @@ abstract class PlatformImage extends Primitive {
 
     // Create concrete primitives
     await File('${primitivesDir.path}/view.dart').writeAsString('''
-import 'core/primitive.dart';
+
 import 'core/platform_view.dart';
 
 class View extends PlatformView {
@@ -282,26 +282,27 @@ class View extends PlatformView {
     'type': 'view',
   };
 }
+
 ''');
 
     await File('${primitivesDir.path}/text.dart').writeAsString('''
-import 'core/primitive.dart';
 import 'core/platform_text.dart';
 
 class Text extends PlatformText {
   final String text;
-  
+  Map<String, dynamic>? style;
   Text(
     this.text, {
-    super.style,
+    this.style,
   });
 
   @override
   Map<String, dynamic> get props => {
-    'type': 'text',
-    'text': text,
-  };
+        'type': 'text',
+        'text': text,
+      };
 }
+
 ''');
 
     await File('${primitivesDir.path}/button.dart').writeAsString('''
@@ -310,19 +311,19 @@ import 'core/platform_button.dart';
 class Button extends PlatformButton {
   final String text;
   final void Function() onPressed;
-  
+
   Button({
     required this.text,
     required this.onPressed,
     Map<String, dynamic>? style,
-  }) : super(style: style);
+  });
 
   @override
   Map<String, dynamic> get props => {
-    'type': 'button',
-    'text': text,
-    'onPressed': true,
-  };
+        'type': 'button',
+        'text': text,
+        'onPressed': true,
+      };
 }
 ''');
 
@@ -330,19 +331,21 @@ class Button extends PlatformButton {
 import 'core/platform_image.dart';
 
 class Image extends PlatformImage {
+  Map<String, dynamic>? style;
   final String source;
-  
+
   Image(
     this.source, {
     Map<String, dynamic>? style,
-  }) : super(style: style);
+  });
 
   @override
   Map<String, dynamic> get props => {
-    'type': 'image',
-    'source': source,
-  };
+        'type': 'image',
+        'source': source,
+      };
 }
+
 ''');
   }
 
