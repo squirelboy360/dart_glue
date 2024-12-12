@@ -14,13 +14,19 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "meta",
+      "rootUri": "file:///Users/tahiruagbanwa/.pub-cache/hosted/pub.dev/meta-1.16.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "dartglue",
       "rootUri": "../",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     }
   ],
-  "generated": "2024-12-11T23:10:54.887707Z",
+  "generated": "2024-12-12T08:12:36.245084Z",
   "generator": "pub",
   "generatorVersion": "3.5.4",
   "flutterRoot": "file:///Users/tahiruagbanwa/development/flutter",

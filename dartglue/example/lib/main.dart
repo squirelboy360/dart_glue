@@ -1,16 +1,20 @@
-import 'package:dartglue/src/core/view.dart';
-import 'package:dartglue/src/core/text.dart';
+// example/lib/main.dart
+import 'package:dartglue/dartglue.dart';
 
 void main() {
-  final root = NativeView(
-    width: 300,
-    height: 500,
-    backgroundColor: '#FFFFFF',
-  );
-
-  final text = NativeText(
-    'Hello from DartGlue!',
-    fontSize: 24,
-    textColor: '#000000',
+  runApp(
+    View(
+      width: 300,
+      height: 500,
+      backgroundColor: '#FFFFFF',
+      padding: EdgeInsets.all(16),
+      children: [
+        Text(
+          'Hello from Glue!',
+          fontSize: 24,
+          textColor: '#000000',
+        ),
+      ],
+    ),
   );
 }

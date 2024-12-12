@@ -1,33 +1,41 @@
-// lib/src/native/bridge.dart
-
-import 'dart:convert' show jsonEncode;
 import 'package:dartglue/dartglue.dart';
-import 'package:dartglue/src/core/utils/view.dart';
-import 'package:ffi/ffi.dart';
+import 'package:meta/meta.dart';
+import '../native/bridge.dart';
+import 'utils/view.dart';
 
-// lib/src/core/view.dart
-class NativeView {
+class View {
+  @protected
   final int _handle;
-  final Map<String, dynamic> _properties = {};
-
-  NativeView({
+  final List<View> _children = [];
+  
+  @internal
+  int get internalHandle => _handle;
+  
+  View({
     double? width,
     double? height,
     String? backgroundColor,
-  }) : _handle = NativeBridge.instance.createView(ViewType.view.index) {
-    updateProps({
+    List<View> children = const [],
+    EdgeInsets padding = const EdgeInsets.all(0),
+  }) : _handle = Bridge.instance.createView(ViewType.view.index) {
+    Bridge.instance.updateViewProps(_handle, {
       if (width != null) 'width': width,
       if (height != null) 'height': height,
       if (backgroundColor != null) 'backgroundColor': backgroundColor,
+      'padding': {
+        'left': padding.left,
+        'top': padding.top,
+        'right': padding.right,
+        'bottom': padding.bottom,
+      },
     });
+    addChildren(children);
   }
 
-  void updateProps(Map<String, dynamic> props) {
-    _properties.addAll(props);
-    // Convert to native pointer that C can understand
-    final propsStr = jsonEncode(_properties);
-    final nativeStr = propsStr.toNativeUtf8();
-    NativeBridge.instance.setViewProps(_handle, nativeStr.cast());
-    malloc.free(nativeStr);
+  void addChildren(List<View> children) {
+    _children.addAll(children);
+    Bridge.instance.updateViewProps(_handle, {
+      'children': _children.map((v) => v.internalHandle).toList()
+    });
   }
 }
