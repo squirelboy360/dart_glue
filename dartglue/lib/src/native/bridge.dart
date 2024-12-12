@@ -2,7 +2,7 @@ import 'dart:ffi' as ffi;
 import 'dart:io' show Platform;
 import 'dart:convert' show jsonEncode;
 import 'package:ffi/ffi.dart';
-import '../core/view.dart';
+import '../core/components/view.dart';
 
 typedef CreateViewNative = ffi.Int64 Function(ffi.Int32);
 typedef CreateViewDart = int Function(int);

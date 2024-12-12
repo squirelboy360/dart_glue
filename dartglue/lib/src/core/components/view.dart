@@ -1,7 +1,7 @@
 import 'package:dartglue/dartglue.dart';
 import 'package:meta/meta.dart';
-import '../native/bridge.dart';
-import 'utils/view.dart';
+import '../../native/bridge.dart';
+import '../utils/view.dart';
 
 class View {
   @protected

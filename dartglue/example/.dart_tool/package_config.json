@@ -20,13 +20,25 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "path",
+      "rootUri": "file:///Users/tahiruagbanwa/.pub-cache/hosted/pub.dev/path-1.9.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.4"
+    },
+    {
+      "name": "vm_service",
+      "rootUri": "file:///Users/tahiruagbanwa/.pub-cache/hosted/pub.dev/vm_service-15.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.3"
+    },
+    {
       "name": "dartglue_example",
       "rootUri": "../",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     }
   ],
-  "generated": "2024-12-12T08:12:35.002265Z",
+  "generated": "2024-12-12T09:13:19.688746Z",
   "generator": "pub",
   "generatorVersion": "3.5.4",
   "flutterRoot": "file:///Users/tahiruagbanwa/development/flutter",

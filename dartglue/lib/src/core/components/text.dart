@@ -1,5 +1,5 @@
 import 'view.dart';
-import '../native/bridge.dart';
+import '../../native/bridge.dart';
 
 class Text extends View {
   Text(

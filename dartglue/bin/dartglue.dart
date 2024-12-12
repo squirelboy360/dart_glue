@@ -1,51 +1,39 @@
-
 import 'dart:io';
+import '../tool/hot_reload.dart';
+import '../tool/project_creator.dart';
+import '../tool/platform_adder.dart';
 
-void main(List<String> args) {
+Future<void> main(List<String> args) async {
   if (args.isEmpty) {
     print('Usage: dartglue <command>');
     exit(1);
   }
 
-  switch (args[0]) {
-    case 'create':
-      if (args.length < 2) {
-        print('Usage: dartglue create <project_name>');
+  try {
+    switch (args[0]) {
+      case 'create':
+        if (args.length < 2) {
+          print('Usage: dartglue create <project_name>');
+          exit(1);
+        }
+        await ProjectCreator.createProject(args[1]);
+        print('Project created successfully!\nRun:\n  cd ${args[1]}\n  dart run');
+        break;
+        
+      case 'run':
+        final useHotReload = args.contains('--hot');
+        if (useHotReload) {
+          await HotReloader.startWatching();
+        }
+        await runProject();
+        break;
+        
+      default:
+        print('Unknown command: ${args[0]}');
         exit(1);
-      }
-      createProject(args[1]);
-      break;
-    case 'run':
-      runProject();
-      break;
-    default:
-      print('Unknown command: ${args[0]}');
-      exit(1);
-  }
-}
-
-void createProject(String name) {
-  print('Creating new DartGlue project: $name');
-  // Project creation logic will go here
-}
-
-void runProject() {
-  print('Running DartGlue project');
-  // Run logic will go here
-}
-// Project creation logic
-class ProjectCreator {
-  static Future<void> create(String name, String platform) async {
-    final result = await Process.run(
-      'dart',
-      ['run', 'tool/create_project.dart', name, platform],
-    );
-
-    if (result.exitCode != 0) {
-      print('Failed to create project: ${result.stderr}');
-      exit(1);
     }
-
-    print('Project $name created successfully!');
+  } catch (e) {
+    print('Error: $e');
+    exit(1);
   }
 }
