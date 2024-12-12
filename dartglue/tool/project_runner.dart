@@ -30,20 +30,20 @@ class ProjectRunner {
 
     // Run platform-specific build
     if (hasAndroid) {
-      await _runAndroid();
+      await runAndroid();
     } else if (hasIos) {
-      await _runIos();
+      await runIos();
     }
 
     // Wait for the VM process to complete
     await vmProcess.exitCode;
   }
 
-  static Future<void> _runAndroid() async {
+  static Future<void> runAndroid() async {
     print('Building Android project...');
     final result = await Process.run('gradle', ['installDebug'],
         workingDirectory: 'android');
-        
+
     if (result.exitCode != 0) {
       print('Build failed: ${result.stderr}');
       exit(1);
@@ -54,12 +54,12 @@ class ProjectRunner {
         ['install', 'android/app/build/outputs/apk/debug/app-debug.apk']);
   }
 
-  static Future<void> _runIos() async {
+  static Future<void> runIos() async {
     print('Building iOS project...');
     final result = await Process.run('xcodebuild',
         ['-workspace', 'ios/Runner.xcworkspace', '-scheme', 'Runner'],
         workingDirectory: 'ios');
-        
+
     if (result.exitCode != 0) {
       print('Build failed: ${result.stderr}');
       exit(1);
